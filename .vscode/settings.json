@@ -1,4 +1,5 @@
 {
   "editor.defaultFormatter": "Shopify.ruby-extensions-pack",
-  "workbench.colorTheme": "Spinel"
+  "workbench.colorTheme": "Spinel",
+  "editor.formatOnSave": true
 }
