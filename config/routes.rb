@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
     
   resources :users, only: [:create, :show, :index, :update, :destroy]
+  resources :tools, only: [:create, :show, :index, :update, :destroy]
   
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
