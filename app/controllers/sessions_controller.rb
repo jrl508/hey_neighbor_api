@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       
       if @user && @user.authenticate(session_params[:password])
         token = encode_token({ user_id: @user.id })
-        render json: { user: @user, token: token }, status: :ok
+        render json: { user: @user.as_json(only: [:id, :email, :first_name, :last_name]), token: token }, status: :ok
       else
         render json: { error: 'Invalid email or password' }, status: :unauthorized
       end
