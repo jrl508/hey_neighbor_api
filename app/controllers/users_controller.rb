@@ -21,13 +21,13 @@ class UsersController < ApplicationController
 
   # GET /users/:id
   def show
-    render json: @user
+    render json: { user: @user.as_json(only: [:id, :email, :first_name, :last_name, :phone_number, :location]) }
   end
 
   # PATCH/PUT /users/:id
   def update
     if @user.update(user_params)
-      render json: @user
+      render json: { user: @user.as_json(only: [:id, :email, :first_name, :last_name, :phone_number, :location])}
     else
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
