@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include Rails.application.routes.url_helpers
+
   before_action :authorized, only: [:show, :index, :update, :destroy]
   before_action :set_user, only: [:show, :update, :destroy]
 
@@ -21,7 +23,7 @@ class UsersController < ApplicationController
 
   # GET /users/:id
   def show
-    render json: { user: @user.as_json(only: [:id, :email, :first_name, :last_name, :phone_number, :location]) }
+    render json: { user: @user.as_json(only: [:id, :email, :first_name, :last_name, :phone_number, :location], methods: [:profile_image_url]) }
   end
 
   # PATCH/PUT /users/:id
@@ -30,6 +32,16 @@ class UsersController < ApplicationController
       render json: { user: @user.as_json(only: [:id, :email, :first_name, :last_name, :phone_number, :location])}
     else
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def upload_profile_image
+    @user = User.find(params[:id])
+
+    if @user.update(profile_image: params[:image])
+      render json: { message: 'Image uploaded successfully', image_url: url_for(@user.profile_image) }
+    else
+      render json: { message: 'Error uploading image' }, status: :unprocessable_entity
     end
   end
 
